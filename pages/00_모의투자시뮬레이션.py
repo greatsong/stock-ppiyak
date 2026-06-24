@@ -33,6 +33,10 @@ if st.button("수익률 확인하기"):
 
     데이터 = yf.download(종목, period="1y")
 
+    # yfinance가 열을 한 겹 더 씌워서 줄 때, 그 겹을 벗겨 줍니다
+    if isinstance(데이터.columns, __import__("pandas").MultiIndex):
+        데이터.columns = 데이터.columns.get_level_values(0)
+
     if 데이터.empty:
         st.error("데이터를 가져오지 못했어요. 종목 이름을 다시 확인하거나, 잠시 후 다시 눌러 보세요.")
     else:
